@@ -17,3 +17,5 @@ Davinci Resolve 17 Clip Loader
 - 4.2 DR17CL Functionality
 	- 4.2.1 Automatically execute duplicated procedure everytime I create minecraft video.
 - 4.3 DR17CL Requirement
+
+https://gist.github.com/X-Raym/2f2bf453fc481b9cca624d7ca0e19de8
