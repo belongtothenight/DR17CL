@@ -19,3 +19,6 @@ Davinci Resolve 17 Clip Loader
 - 4.3 DR17CL Requirement
 
 https://gist.github.com/X-Raym/2f2bf453fc481b9cca624d7ca0e19de8
+
+DaVinci Resolve Scripting Doc
+C:\ProgramData\Blackmagic Design\DaVinci Resolve\Support\Developer\Scripting\README.txt
