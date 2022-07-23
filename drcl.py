@@ -61,7 +61,7 @@ def make_window_3():
         [sg.Text("Type 'n': Next")],
         [sg.Text("Type 'q': Quit")]
     ]
-    window = sg.Window('DrCL Startup', layout, grab_anywhere=True, resizable=True, margins=(0,0), keep_on_top=True)
+    window = sg.Window('DrCL Startup', layout, grab_anywhere=True, resizable=True, margins=(0,0), keep_on_top=True, relative_location=(-400, -350))
     return window
 
 def make_window_4():
@@ -170,8 +170,7 @@ if __name__ == '__main__':
             break
         # Focus on GUI
         if lef == False:
-            ag.click(x=975, y=567)
-            ag.dragTo(x=320, y= 186, duration=0.3, button='left')
+            ag.click(x=542, y=236)#----------
         lef = True
         # Custom GUI Event Handling
         if event == 'FOLDER02':
@@ -228,7 +227,8 @@ if __name__ == '__main__':
             break
         # Focus on GUI
         if lef == False:
-            ag.click(x=975, y=567)
+            time.sleep(lsp * 5)
+            ag.click(x=939, y=552)
         lef = True
         # Custom GUI Event Handling
         if event == 'BUTTON01':

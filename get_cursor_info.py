@@ -12,3 +12,6 @@ pag.displayMousePosition()
 # 687 527
 # 911 326
 # type
+# 542 236
+# 970 594
+# 939 552
