@@ -1,14 +1,15 @@
-# Davinci Resolve 17 Clip Loader
+# DaVinci Resolve 17 Clip Loader
 
 DR17CL Work Flow
 0. Startup
 1. Open youtube studio and audio library in google.
    1. Choosing Video
    2. Choosing Audio
-2. Open Davinci Resolve 17 browser, request filename, create new project, and change resolution settings.
-   1. Launch Davinci Resolve
+2. Open DaVinci Resolve 17 browser, request filename, create new project, and change resolution settings.
+   1. Launch DaVinci Resolve
    2. Request filename
-   3. Create new project with defualt settings.
+   3. Create new project
+   4. Change project settingsk
 3. Import selected video and audio.
    1. Import Video
    2. Import Audio
@@ -31,10 +32,10 @@ DR17CL Work Flow
    1. Configure YT timeline.
    2. Configure IG timeline.
 9.  Ask for final confirmation.
-   1.  Ask for confirmation
+   3.  Ask for confirmation
 10. Render both timeline.
-   1.  Trigger rendering.
-   2.  Read progress and show in progress bar?
+   4.  Trigger rendering.
+   5.  Read progress and show in progress bar?
 
 Additional Functionality
 1. Progress of entire script visualize on GUI.
