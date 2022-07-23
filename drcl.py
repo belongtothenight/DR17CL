@@ -199,6 +199,8 @@ if __name__ == '__main__':
     time.sleep(lsp*5)
     kb.send('enter')
     time.sleep(lsp*5)
+
+    # 2.2 Request filename
     # Open Windows Explorer For Checking Project Name
     subprocess.Popen('explorer')
     # Open GUI
@@ -223,9 +225,9 @@ if __name__ == '__main__':
         # Custom GUI Event Handling
         if event == 'BUTTON01':
             window['INPUT01'].update(disabled=True)
-            pn = "DDMS" + values['INPUT01']
-            print("[LOG] Clicked Confirm! New project name: " + pn)
-            window['TEXT03'].update(value='New project name: ' + pn)
+            pn = values['INPUT01']
+            print("[LOG] Clicked Confirm! New project name: DDMS" + pn)
+            window['TEXT03'].update(value='New project name: DDMS' + pn)
         # Keyboard Event Handling
         if kb.is_pressed('q'):
             print("[LOG] End ennxecuting " + mf + "......")
@@ -235,6 +237,8 @@ if __name__ == '__main__':
             break
     window.close()
     lef = False
+
+    # 2.3 Create new project with default settings
     # Operate DaVinci Resolve Project Manager
     for i in range(0, 2):
         # os.system("TASKKILL /F /IM explorer.exe && start explorer.exe")
@@ -261,28 +265,3 @@ if __name__ == '__main__':
     # End executing
     print("[LOG] End executing " + mf + "......\n")
     sys.exit(0)
-
-'''
-while True:
-        event, values = window.read(timeout=100)
-        # General Event Handling
-        if event not in (sg.TIMEOUT_EVENT, sg.WIN_CLOSED):
-            # print('============ Event = ', event, ' ==============')
-            # print('-------- Values Dictionary (key=value) --------')
-            # for key in values:
-            #     print(key, ' = ',
-            #     values[key])
-            pass
-        if event in (None, 'Exit'):
-            print("[LOG] Clicked Exit!")
-            break
-        # Custom GUI Event Handling
-        # Keyboard Event Handling
-        if keyboard.is_pressed('q'):
-            print("[LOG] End executing " + mf + "......")
-            sys.exit()
-        if keyboard.is_pressed('n'):
-            print("[LOG] next......")
-            break
-    window.close()
-'''

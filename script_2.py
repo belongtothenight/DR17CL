@@ -14,24 +14,24 @@ def GetResolve():
 	except ImportError:
 		expectedPath=os.getenv('PROGRAMDATA') + "\\Blackmagic Design\\DaVinci Resolve\\Support\\Developer\\Scripting\\Modules\\"		
 		# check if the default path has it...
-		print("[LOG] Unable to find module DaVinciResolveScript from $PYTHONPATH - trying default locations")
+		print("Unable to find module DaVinciResolveScript from $PYTHONPATH - trying default locations")
 		try:
 			import imp
 			bmd = imp.load_source('DaVinciResolveScript', expectedPath+"DaVinciResolveScript.py")
 		except ImportError:
 			# No fallbacks ... report error:
-			print("[LOG] Unable to find module DaVinciResolveScript - please ensure that the module DaVinciResolveScript is discoverable by python")
-			print("[LOG] For a default DaVinci Resolve installation, the module is expected to be located in: "+expectedPath)
+			print("Unable to find module DaVinciResolveScript - please ensure that the module DaVinciResolveScript is discoverable by python")
+			print("For a default DaVinci Resolve installation, the module is expected to be located in: "+expectedPath)
 			sys.exit()
-	print("[LOG] DaVinci Resolve module found")
+	print("DaVinci Resolve module found")
 	return bmd.scriptapp("Resolve")
 
 def CreateNewProject():
     # Set the project settings
-    print("[LOG] Project name: " + projectName)
-    print("[LOG] Framerate: " + str(framerate))
-    print("[LOG] Width: " + str(width))
-    print("[LOG] Height: " + str(height))
+    print("Project name: " + projectName)
+    print("Framerate: " + str(framerate))
+    print("Width: " + str(width))
+    print("Height: " + str(height))
 
     # Create project and set parameters:
     resolve = GetResolve()
@@ -41,7 +41,7 @@ def CreateNewProject():
     project = projectManager.CreateProject(projectName)
 
     if not project:
-        print("[LOG] Unable to create a project '" + projectName + "'")
+        print("Unable to create a project '" + projectName + "'")
         sys.exit()
     return resolve, projectManager, mediastorage, project
 
@@ -52,7 +52,7 @@ def LoadProject():
     mediastorage = resolve.GetMediaStorage()
     project = projectManager.LoadProject(projectName)
     if not project:
-        print("[LOG] Unable to load a project '" + projectName + "'")
+        print("Unable to load a project '" + projectName + "'")
         resolve, projectManager, mediastorage, project = CreateNewProject()
     return resolve, projectManager, mediastorage, project
 
@@ -73,12 +73,12 @@ def ResolveProjectInitialize():
     # timelineName = "Timeline 1"
     # timeline = mediapool.CreateEmptyTimeline(timelineName)
     # if not timeline:
-    #     print("[LOG] Unable to create timeline '" + timelineName + "'")
+    #     print("Unable to create timeline '" + timelineName + "'")
     return resolve, projectManager, project, mediapool, mediastorage, rootFolder, clips
 
 if __name__ == '__main__':
-    #os.system('cls')
-    print("[LOG] [LOG] Start executing drcl.py")
+    os.system('cls')
+    print("Start executing drcl.py")
 
     # Default parameters for the project
     global project_num, projectName, framerate, width, height, mediaPath, resolve, projectManager, project
@@ -102,10 +102,10 @@ if __name__ == '__main__':
     resolve.OpenPage("media")
     tkinter.Tk().withdraw() # prevents an empty tkinter window from appearing
     video_path = filedialog.askopenfile()
-    print("[LOG] Video path: " + str(video_path))
+    print("Video path: " + str(video_path))
     tkinter.Tk().withdraw() # prevents an empty tkinter window from appearing
     audio_path = filedialog.askopenfile()
-    print("[LOG] Audio path: " + str(audio_path))
+    print("Audio path: " + str(audio_path))
 
     # # Add new folder in Media Pool:
     # root = mediapool.GetRootFolder()
@@ -126,7 +126,7 @@ if __name__ == '__main__':
     
     projectManager.SaveProject()
 
-    print("[LOG] End executing drcl.py")
+    print("End executing drcl.py")
 
 '''DaVinci Resolve Scripting Command
 exec(open("D:\\Note_Database\\Subject\\CPDWG Custom Program Developed With Gidhub\\Davinci Resolve Clip Loader\\drcl.py", encoding='utf-8').read())
