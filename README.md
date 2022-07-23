@@ -6,7 +6,7 @@ DR17CL Work Flow
    1. Choosing Video
    2. Choosing Audio
 2. Open Davinci Resolve 17 browser, request filename, create new project.
-3. Open up file explorer and find provide video and audio selection, display what is selected, able to deselect and reselect, import selected video and audio.
+3. Import selected video and audio.
 4. Automatically put video and audio into timeline and change resolution settings.
 5. Duplicate timeline after color is adjusted.
 6. In YT videos, add title automatically(audio name and creator), adjust video length, add fade in and out on video and audio.
