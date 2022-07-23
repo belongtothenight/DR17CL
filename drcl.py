@@ -14,7 +14,7 @@ import gui_layout as gl
 import gui_event_handler as geh
 
 global mf, vdp, adp, awp, cp, drpdp, lsp, lef, pn
-mf = "drcl_1.py" # Main Filename
+mf = "drcl.py" # Main Filename
 vdp = 'D:/Note_Database/YouTube/YT Database/YTD File Video/YTDFV Recording-Minecraft' # Video Directory Path
 adp = 'D:/Note_Database/YouTube/YT Database/YTD File Audio/YTDFA YT Audio Library'
 awp = 'https://studio.youtube.com/channel/UCwHILYLxBpkE5NbuoPO8Rcw/music' # Audio Website Path
@@ -23,6 +23,7 @@ drpdp = 'C:/Users/dachu/AppData/Roaming/Blackmagic Design/DaVinci Resolve/Suppor
 drps1ec = 'exec(open("D:/Note_Database/Subject/CPDWG Custom Program Developed With Gidhub/Davinci Resolve Clip Loader/script_1.py", encoding="utf-8").read())' # DaVinci Resolve Python Script 1 Execute Command
 p1p = './picture/Untitled_Project.png' # Picture 1 Path
 p2p = './picture/DaVinci_Resolve_Menu.png' # Picture 2 Path
+lfdp = 'D:/Note_Database/Subject/CPDWG Custom Program Developed With Gidhub/Davinci Resolve Clip Loader/log/Project_Number.txt' # Log File Directory Path
 lsp = 0.1 # Loop Sleep Parameter
 lef = False # Loop Execution Flag
 pn = 1000 # Project Number
@@ -192,13 +193,20 @@ if __name__ == '__main__':
 
     # 2.1 Launch Davinci Resolve
     print("[LOG] Launch Davinci Resolve")
-    # Open Davinci Resolve
     kb.send('win+s')
-    time.sleep(lsp*5)
-    kb.write("Davinci")
-    time.sleep(lsp*5)
+    time.sleep(lsp * 5)
+    kb.write("DaVinci")
+    time.sleep(lsp * 5)
     kb.send('enter')
-    time.sleep(lsp*5)
+    time.sleep(lsp * 5)
+    '''
+    ATTENTION: Can't use these commands to launch DaVinci Resolve, since they all holds the program unstill its closed, then proceed to next commend in script.
+    cmd = ['C:/Program Files/Blackmagic Design/DaVinci Resolve/Resolve.exe']
+    os.chdir('C:/Program Files/Blackmagic Design/DaVinci Resolve')
+    os.system('Resolve.exe')
+    # os.startfile(cmd[0])
+    # subprocess.call(cmd)
+    # process = subprocess.Popen(cmd, stdout=subprocess.PIPE)'''
 
     # 2.2 Request filename
     # Open Windows Explorer For Checking Project Name
@@ -228,6 +236,10 @@ if __name__ == '__main__':
             pn = values['INPUT01']
             print("[LOG] Clicked Confirm! New project name: DDMS" + pn)
             window['TEXT03'].update(value='New project name: DDMS' + pn)
+            # Store the values local log file
+            f = open(lfdp, 'w', encoding='utf-8')
+            f.write(pn)
+            f.close()            
         # Keyboard Event Handling
         if kb.is_pressed('q'):
             print("[LOG] End ennxecuting " + mf + "......")

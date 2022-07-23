@@ -1,10 +1,15 @@
+# Import Pypl Library
 from logging import root
 import os
 import sys
-import tkinter
-from tkinter import filedialog
-import webbrowser as wb
-import importlib as ipl
+
+'''
+ATTENTION: This is not the main module, please run drcl.py instead.
+This script is used to execute work flow section 2.
+Open DaVinci Resolve project manager, requestion filename, create new porject, change resolution settings.
+2-3. Create new project
+2-4. Change project settings
+'''
 
 def GetResolve():
 	try:
@@ -26,110 +31,51 @@ def GetResolve():
 	print("[LOG] DaVinci Resolve module found")
 	return bmd.scriptapp("Resolve")
 
-def CreateNewProject():
-    # Set the project settings
-    print("[LOG] Project name: " + projectName)
-    print("[LOG] Framerate: " + str(framerate))
-    print("[LOG] Width: " + str(width))
-    print("[LOG] Height: " + str(height))
+########################################################################################################################
 
-    # Create project and set parameters:
-    resolve = GetResolve()
-    projectManager = resolve.GetProjectManager()
-    mediastorage = resolve.GetMediaStorage()
-    # project = projectManager.CreateProject('./DDMS/' + projectName)
-    project = projectManager.CreateProject(projectName)
+lfdp = 'D:/Note_Database/Subject/CPDWG Custom Program Developed With Gidhub/Davinci Resolve Clip Loader/log/Project_Number.txt' # Log File Directory Path
 
-    if not project:
-        print("[LOG] Unable to create a project '" + projectName + "'")
-        sys.exit()
-    return resolve, projectManager, mediastorage, project
+#os.system('cls')
+print("[LOG] [LOG] Start executing drcl.py")
+f = open(lfdp, 'r', encoding='utf-8')
+pn = f.read()
+f.close()
+print("[LOG] " + pn)
 
-def LoadProject():
-    # used for script testing
-    resolve = GetResolve()
-    projectManager = resolve.GetProjectManager()
-    mediastorage = resolve.GetMediaStorage()
-    project = projectManager.LoadProject(projectName)
-    if not project:
-        print("[LOG] Unable to load a project '" + projectName + "'")
-        resolve, projectManager, mediastorage, project = CreateNewProject()
-    return resolve, projectManager, mediastorage, project
+# Default parameters for the project
+global project_num, projectName, framerate, width, height, mediaPath, resolve, projectManager, project
+project_num = pn
+projectName = "DDMS" + project_num
+framerate = 60
+width = 1920
+height = 1080
+mediaPath = "C:/Users/dachu/AppData/Roaming/Blackmagic Design/DaVinci Resolve/Support/Resolve Disk Database/Resolve Projects/Users/guest/Projects" + projectName + "/"
 
-def ResolveProjectInitialize():
-    # Set the project settings
-    resolve, projectManager, mediastorage, project = LoadProject()
-    # resolve, projectManager, mediastorage, project = CreateNewProject ()
+# 2-3. Create new project
+resolve = GetResolve()
+projectManager = resolve.GetProjectManager()
+mediastorage = resolve.GetMediaStorage()
+project = projectManager.CreateProject(projectName)
 
-    project.SetSetting("timelineFrameRate", str(framerate))
-    project.SetSetting("timelineResolutionWidth", str(width))
-    project.SetSetting("timelineResolutionHeight", str(height))
+if not project:
+    print("[LOG] Unable to create a project '" + projectName + "'")
+    sys.exit()
 
-    # # Add folder contents to Media Pool:
-    mediapool = project.GetMediaPool()
-    rootFolder = mediapool.GetRootFolder()
+# 2-4. Change project settings
+project.SetSetting("timelineFrameRate", str(framerate))
+project.SetSetting("timelineResolutionWidth", str(width))
+project.SetSetting("timelineResolutionHeight", str(height))
+print("[LOG] Project name: " + projectName)
+print("[LOG] Framerate: " + str(framerate))
+print("[LOG] Width: " + str(width))
+print("[LOG] Height: " + str(height))
 
-    # Create timeline:
-    # timelineName = "Timeline 1"
-    # timeline = mediapool.CreateEmptyTimeline(timelineName)
-    # if not timeline:
-    #     print("[LOG] Unable to create timeline '" + timelineName + "'")
-    return resolve, projectManager, project, mediapool, mediastorage, rootFolder, clips
+print("[LOG] Project {0} created".format(projectName))
 
-if __name__ == '__main__':
-    #os.system('cls')
-    print("[LOG] [LOG] Start executing drcl.py")
-
-    # Default parameters for the project
-    global project_num, projectName, framerate, width, height, mediaPath, resolve, projectManager, project
-    project_num = 36
-    projectName = "DDMS" + str(project_num)
-    framerate = 60
-    width = 1920
-    height = 1080
-    mediaPath = "C:/Users/dachu/AppData/Roaming/Blackmagic Design/DaVinci Resolve/Support/Resolve Disk Database/Resolve Projects/Users/guest/Projects" + projectName + "/"
-
-    # # Workflow
-    # # 4.1 Open YouTube Audio Library (Doen't work)
-    # url = 'https://studio.youtube.com/channel/UCwHILYLxBpkE5NbuoPO8Rcw/music'
-    # chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s'
-    # wb.get(chrome_path).open(url)
-    
-    # 4.2 Open DaVinci Resolve, create new project, done initialize settings
-    resolve, projectManager, project, mediapool, mediastorage, rootFolder, clips = ResolveProjectInitialize()
-
-    # 4.3 Import media from folder
-    resolve.OpenPage("media")
-    tkinter.Tk().withdraw() # prevents an empty tkinter window from appearing
-    video_path = filedialog.askopenfile()
-    print("[LOG] Video path: " + str(video_path))
-    tkinter.Tk().withdraw() # prevents an empty tkinter window from appearing
-    audio_path = filedialog.askopenfile()
-    print("[LOG] Audio path: " + str(audio_path))
-
-    # # Add new folder in Media Pool:
-    # root = mediapool.GetRootFolder()
-    # print(str(root))
-    # mediapool.AddSubFolder(root, "Media")
-
-    clip1 = mediastorage.AddItemListToMediaPool(video_path)
-    print(str(clip1))
-    clip2 = mediastorage.AddItemListToMediaPool(audio_path)
-    print(str(clip2))
-
-    timeline = mediapool.CreateEmptyTimeline("Timeline 1")
-    print(str(timeline))
-    mediapool.AppendToTimeline(clip1)
-    print(str(timeline))
-    mediapool.AppendToTimeline(clip2)
-    print(str(timeline))
-    
-    projectManager.SaveProject()
-
-    print("[LOG] End executing drcl.py")
+print("[LOG] End executing script_1.py")
 
 '''DaVinci Resolve Scripting Command
-exec(open("D:\\Note_Database\\Subject\\CPDWG Custom Program Developed With Gidhub\\Davinci Resolve Clip Loader\\drcl.py", encoding='utf-8').read())
+exec(open("D:\\Note_Database\\Subject\\CPDWG Custom Program Developed With Gidhub\\Davinci Resolve Clip Loader\\script_1.py", encoding='utf-8').read())
 '''
 
 '''Links

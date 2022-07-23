@@ -9,7 +9,7 @@ DR17CL Work Flow
    1. Launch DaVinci Resolve
    2. Request filename
    3. Create new project
-   4. Change project settingsk
+   4. Change project settings
 3. Import selected video and audio.
    1. Import Video
    2. Import Audio
