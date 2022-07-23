@@ -16,13 +16,16 @@ import gui_event_handler as geh
 global mf, vdp, adp, awp, cp, drpdp, lsp, lef, pn
 mf = "drcl.py" # Main Filename
 vdp = 'D:/Note_Database/YouTube/YT Database/YTD File Video/YTDFV Recording-Minecraft' # Video Directory Path
-adp = 'D:/Note_Database/YouTube/YT Database/YTD File Audio/YTDFA YT Audio Library'
+adp = 'D:/Note_Database/YouTube/YT Database/YTD File Audio/YTDFA YT Audio Library' # Audio Directory Path
 awp = 'https://studio.youtube.com/channel/UCwHILYLxBpkE5NbuoPO8Rcw/music' # Audio Website Path
 cp = 'C:/Program Files/Google/Chrome/Application/chrome.exe %s &' # Chrome Path 
 drpdp = 'C:/Users/dachu/AppData/Roaming/Blackmagic Design/DaVinci Resolve/Support/Resolve Disk Database/Resolve Projects/Users/guest/Projects' # DaVinci Resolve Directory Path
 drps1ec = 'exec(open("D:/Note_Database/Subject/CPDWG Custom Program Developed With Gidhub/Davinci Resolve Clip Loader/script_1.py", encoding="utf-8").read())' # DaVinci Resolve Python Script 1 Execute Command
 p1p = './picture/Untitled_Project.png' # Picture 1 Path
 p2p = './picture/DaVinci_Resolve_Menu.png' # Picture 2 Path
+p3p = './picture/End_executing_script_1.png'
+p4p = './picture/Import_Media.png'
+p5p = './picture/Open.png'
 lfdp = 'D:/Note_Database/Subject/CPDWG Custom Program Developed With Gidhub/Davinci Resolve Clip Loader/log/Project_Number.txt' # Log File Directory Path
 lsp = 0.1 # Loop Sleep Parameter
 lef = False # Loop Execution Flag
@@ -68,7 +71,7 @@ def make_window_4():
     layout = [
         [sg.Text("Type the DDMS Project Number like \'01\'")],
         [sg.Text("Check privous project at: "), sg.Input(drpdp, disabled=True, text_color='gray')],
-        [sg.Input(key='INPUT01'), sg.Button('Confirm', key='BUTTON01')],
+        [sg.Text("Project Number: "), sg.Input(key='INPUT01'), sg.Button('Confirm', key='BUTTON01')],
         [sg.Text(key='TEXT03')],
         [sg.HSeparator()],
         [sg.Text("Type 'n': Next")],
@@ -232,7 +235,6 @@ if __name__ == '__main__':
         lef = True
         # Custom GUI Event Handling
         if event == 'BUTTON01':
-            window['INPUT01'].update(disabled=True)
             pn = values['INPUT01']
             print("[LOG] Clicked Confirm! New project name: DDMS" + pn)
             window['TEXT03'].update(value='New project name: DDMS' + pn)
@@ -270,8 +272,78 @@ if __name__ == '__main__':
     time.sleep(lsp)
     ag.click(x=911, y=326)
     time.sleep(lsp)
+    # Run script 'script_1.py', execute 2.3 + 2.4
     ag.typewrite(drps1ec)
     kb.send('enter')
+    # Close Console
+    ag.click(x=1255, y=295)
+    # Buffer
+    time.sleep(lsp * 3)
+    ag.moveTo(960, 540)
+
+    # 3.1 Import Video
+    dp_1 = ''
+    dp_2 = ''
+    buf = False
+    vdp_split = vdp.split('/')
+    vdplen = len(vdp_split)
+    for i in range(0, vdplen-1):
+        dp_1 = dp_1 + vdp_split[i] + '/'
+    dp_2 = vdp_split[-1]
+    # Import Video
+    kb.send('ctrl+i')
+    time.sleep(lsp * 20)
+    kb.write(dp_2)
+    time.sleep(lsp * 5)
+    while True:
+        if ag.locateOnScreen(p4p, grayscale=True) != None:
+            kb.send('f4')
+            kb.send('ctrl+a')
+            kb.send('delete')
+            kb.write(dp_1)
+            kb.send('enter')
+            break
+    while buf == False:
+        print("[LOG] finding...")
+        buf = ag.locateOnScreen(p5p, grayscale=True)
+    time.sleep(lsp)
+    ag.click(ag.center(buf))
+
+    # Buffer
+    time.sleep(lsp * 3)
+    ag.moveTo(960, 540)
+
+    # 3.2 Import Audio
+    dp_1 = ''
+    dp_2 = ''
+    buf = None
+    adp_split = adp.split('/')
+    adplen = len(adp_split)
+    for i in range(0, adplen-1):
+        dp_1 = dp_1 + adp_split[i] + '/'
+    dp_2 = adp_split[-1]
+
+    print(dp_1)
+    print(dp_2)
+
+    # Import Audio
+    kb.send('ctrl+i')
+    time.sleep(lsp * 20)
+    kb.write(dp_2)
+    time.sleep(lsp * 5)
+    while True:
+        if ag.locateOnScreen(p4p, grayscale=True) != None:
+            kb.send('f4')
+            kb.send('ctrl+a')
+            kb.send('delete')
+            kb.write(dp_1)
+            kb.send('enter')
+            break
+    while buf == None:
+        print("[LOG] finding...")
+        buf = ag.locateOnScreen(p5p, grayscale=True)
+    time.sleep(lsp)
+    ag.click(ag.center(buf))
 
 
     # End executing

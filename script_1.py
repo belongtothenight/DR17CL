@@ -34,6 +34,7 @@ def GetResolve():
 ########################################################################################################################
 
 lfdp = 'D:/Note_Database/Subject/CPDWG Custom Program Developed With Gidhub/Davinci Resolve Clip Loader/log/Project_Number.txt' # Log File Directory Path
+drpmp = 'C:/Users/dachu/AppData/Roaming/Blackmagic Design/DaVinci Resolve/Support/Resolve Disk Database/Resolve Projects/Users/guest/Projects' # DaVinci Resolve Project Media Path
 
 #os.system('cls')
 print("[LOG] [LOG] Start executing drcl.py")
@@ -49,7 +50,7 @@ projectName = "DDMS" + project_num
 framerate = 60
 width = 1920
 height = 1080
-mediaPath = "C:/Users/dachu/AppData/Roaming/Blackmagic Design/DaVinci Resolve/Support/Resolve Disk Database/Resolve Projects/Users/guest/Projects" + projectName + "/"
+mediaPath = drpmp + projectName + "/"
 
 # 2-3. Create new project
 resolve = GetResolve()
