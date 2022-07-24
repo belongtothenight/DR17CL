@@ -1,4 +1,4 @@
-# Import Pypl Library
+# Import Pypi Library
 from multiprocessing import Value
 from tkinter import DISABLED
 import pyautogui as ag
