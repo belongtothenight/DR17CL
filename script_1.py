@@ -72,7 +72,7 @@ print("[LOG] Width: " + str(width))
 print("[LOG] Height: " + str(height))
 
 print("[LOG] Project {0} created".format(projectName))
-
+projectManager.SaveProject()
 print("[LOG] End executing script_1.py")
 
 '''DaVinci Resolve Scripting Command

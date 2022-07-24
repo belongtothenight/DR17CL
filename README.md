@@ -1,6 +1,8 @@
 # DaVinci Resolve 17 Clip Loader
-
-DR17CL Work Flow
+## ATTENTION: This project is not finished, not under developing.
+The original way to automate this project is by using its API, but it can only be triggered with the internal console, which is no way reachable using script without directly interact with GUI. Also, despite the detailed description on API, the available functions are not really helpful in automation workflow and quite time consuminig to try out their full functionalities. With these two reasons, making it inevidable to automate this process using 'pyautogui' or 'keyboard' + 'mouse' library. This approach is way too unreliable, it can work on partial tesing, but fail when conbined together.</br>
+Overall, currently availble method to fully automate my daily video editing workflow is not yet achievable.
+### DR17CL Work Flow
 0. Startup
 1. Open youtube studio and audio library in google.
    1. Choosing Video
@@ -37,10 +39,10 @@ DR17CL Work Flow
    4.  Trigger rendering.
    5.  Read progress and show in progress bar?
 
-Additional Functionality
+### Additional Functionality
 1. Progress of entire script visualize on GUI.
 
-DR17CL Requirement
+### DR17CL Requirement
 
 https://gist.github.com/X-Raym/2f2bf453fc481b9cca624d7ca0e19de8
 

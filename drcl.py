@@ -23,9 +23,10 @@ drpdp = 'C:/Users/dachu/AppData/Roaming/Blackmagic Design/DaVinci Resolve/Suppor
 drps1ec = 'exec(open("D:/Note_Database/Subject/CPDWG Custom Program Developed With Gidhub/Davinci Resolve Clip Loader/script_1.py", encoding="utf-8").read())' # DaVinci Resolve Python Script 1 Execute Command
 p1p = './picture/Untitled_Project.png' # Picture 1 Path
 p2p = './picture/DaVinci_Resolve_Menu.png' # Picture 2 Path
-p3p = './picture/End_executing_script_1.png'
 p4p = './picture/Import_Media.png'
 p5p = './picture/Open.png'
+p6p = './picture/Edit.png'
+p7p = './picture/Timeline_1.png'
 lfdp = 'D:/Note_Database/Subject/CPDWG Custom Program Developed With Gidhub/Davinci Resolve Clip Loader/log/Project_Number.txt' # Log File Directory Path
 lsp = 0.1 # Loop Sleep Parameter
 lef = False # Loop Execution Flag
@@ -80,9 +81,32 @@ def make_window_4():
     window = sg.Window('DrCL Startup', layout, grab_anywhere=True, resizable=True, margins=(0,0), keep_on_top=True)
     return window
 
+def make_window_5():
+    layout = [
+        [sg.Text("Drag video and audio into timeline. Type 'n' when finished")],
+        [sg.HSeparator()],
+        [sg.Text("Type 'n': Next")],
+        [sg.Text("Type 'q': Quit")]
+    ]
+    window = sg.Window('DrCL Startup', layout, grab_anywhere=True, resizable=True, margins=(0,0), keep_on_top=True, relative_location=(400, -350))
+    return window
+
+def make_window_6():
+    layout = [
+        [sg.Text("Adjust video color. Type 'n' when finished")],
+        [sg.HSeparator()],
+        [sg.Text("Type 'n': Next")],
+        [sg.Text("Type 'q': Quit")]
+    ]
+    window = sg.Window('DrCL Startup', layout, grab_anywhere=True, resizable=True, margins=(0,0), keep_on_top=True, relative_location=(-600, -350))
+    return window
+
 if __name__ == '__main__':
     os.system('cls')
     print("\n[LOG] Start executing " + mf + "......")
+
+    # Testing
+    
 
     # 0 Startup Window
     print("[LOG] Startup Window")
@@ -258,12 +282,12 @@ if __name__ == '__main__':
         # os.system("TASKKILL /F /IM explorer.exe && start explorer.exe")
         pass
     while True:
-        if ag.locateOnScreen(p1p) != None:
+        if ag.locateOnScreen(p1p, grayscale=True) != None:
             ag.click(x=897, y=323, clicks=2)
             break
     # Operate DaVinci Resolve Concole
     while True:
-        if ag.locateOnScreen(p2p) != None:
+        if ag.locateOnScreen(p2p, grayscale=True) != None:
             break
     time.sleep(lsp*5)
     ag.click(x=679, y=30)
@@ -345,6 +369,108 @@ if __name__ == '__main__':
     time.sleep(lsp)
     ag.click(ag.center(buf))
 
+    # 4 Load video and audio into timeline
+    # Buffer
+    time.sleep(lsp * 3)
+    ag.moveTo(960, 540)
+    # Switch to Edit Tab
+    buf = None
+    while buf == None:
+        print('[LOG] finding...')
+        buf = ag.locateOnScreen(p6p, grayscale=True)
+    ag.click(ag.center(buf))
+    # Buffer
+    time.sleep(lsp * 3)
+    ag.moveTo(960, 540)
+    # Open GUI
+    window = make_window_5()
+    while True:
+        event, values = window.read(timeout=100)
+        # GUI Event Handling
+        if event not in (sg.TIMEOUT_EVENT, sg.WIN_CLOSED):
+            # print('============ Event = ', event, ' ==============')
+            # print('-------- Values Dictionary (key=value) --------')
+            # for key in values:
+            #     print(key, ' = ',
+            #     values[key])
+            pass
+        if event in (None, 'Exit'):
+            print("[LOG] Clicked Exit!")
+            break
+        # Focus on GUI
+        if lef == False:
+            ag.click(x=1367, y=227)
+        lef = True
+        # Keyboard Event Handling
+        if kb.is_pressed('q'):
+            print("[LOG] End executing " + mf + "......")
+            sys.exit()
+        if kb.is_pressed('n'):
+            print("[LOG] next......")
+            break
+    window.close()
+    lef = False
+
+    # 5.1 Adjust video color
+    # Open GUI
+    window = make_window_6()
+    while True:
+        event, values = window.read(timeout=100)
+        # GUI Event Handling
+        if event not in (sg.TIMEOUT_EVENT, sg.WIN_CLOSED):
+            # print('============ Event = ', event, ' ==============')
+            # print('-------- Values Dictionary (key=value) --------')
+            # for key in values:
+            #     print(key, ' = ',
+            #     values[key])
+            pass
+        if event in (None, 'Exit'):
+            print("[LOG] Clicked Exit!")
+            break
+        # Focus on GUI
+        if lef == False:
+            ag.click(x=374, y=217)
+        lef = True
+        # Keyboard Event Handling
+        if kb.is_pressed('q'):
+            print("[LOG] End executing " + mf + "......")
+            sys.exit()
+        if kb.is_pressed('n'):
+            print("[LOG] next......")
+            break
+    window.close()
+    lef = False
+
+    # 5.2 Duplicate timeline for IG
+    # Buffer
+    time.sleep(lsp * 3)
+    ag.moveTo(960, 540)
+    # Switch to Edit Tab
+    buf = None
+    while buf == None:
+        print('[LOG] finding...')
+        buf = ag.locateOnScreen(p6p, grayscale=True)
+    ag.click(ag.center(buf))
+    # Buffer
+    time.sleep(lsp * 3)
+    ag.moveTo(960, 540)
+    # Click on Timeline
+    buf = None
+    while buf == None:
+        print('[LOG] finding...')
+        buf = ag.locateOnScreen(p7p, grayscale=True)
+    time.sleep(lsp * 3)
+    ag.click(ag.center(buf))
+    time.sleep(lsp * 3)
+    ag.hotkey('ctrl', 'c')
+    time.sleep(lsp * 3)
+    ag.hotkey('ctrl', 'v')
+
+    # 6
+
+    # Buffer
+    time.sleep(lsp * 3)
+    ag.moveTo(960, 540)
 
     # End executing
     print("[LOG] End executing " + mf + "......\n")

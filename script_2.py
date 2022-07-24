@@ -1,85 +1,77 @@
-# Import Pypl Library
-from multiprocessing import Value
-from tkinter import DISABLED
-import pyautogui as ag
-import keyboard as kb
-import PySimpleGUI as sg
-import webbrowser as wb
-import sys
-import time
+from logging import root
 import os
-import subprocess
+import sys
+import tkinter
+from tkinter import filedialog
+import webbrowser as wb
+import importlib as ipl
 
-vdp = 'D:/Note_Database/YouTube/YT Database/YTD File Video/YTDFV Recording-Minecraft/Minecraft 2022.07.14 - 18.30.51.08.mp4' # Video Directory Path
-adp = 'D:/Note_Database/YouTube/YT Database/YTD File Audio/YTDFA YT Audio Library/Go Down Swinging (Instrumental) - NEFFEX.mp3' # Audio Directory Path
-p2p = './picture/DaVinci_Resolve_Menu.png' # Picture 2 Path
-p4p = './picture/Import_Media.png'
-p5p = './picture/Open.png'
-lsp = 0.1 # Loop Sleep Parameter
+def GetResolve():
+	try:
+	# The PYTHONPATH needs to be set correctly for this import statement to work.
+	# An alternative is to import the DaVinciResolveScript by specifying absolute path (see ExceptionHandler logic)
+		import DaVinciResolveScript as bmd
+	except ImportError:
+		expectedPath=os.getenv('PROGRAMDATA') + "\\Blackmagic Design\\DaVinci Resolve\\Support\\Developer\\Scripting\\Modules\\"		
+		# check if the default path has it...
+		print("Unable to find module DaVinciResolveScript from $PYTHONPATH - trying default locations")
+		try:
+			import imp
+			bmd = imp.load_source('DaVinciResolveScript', expectedPath+"DaVinciResolveScript.py")
+		except ImportError:
+			# No fallbacks ... report error:
+			print("Unable to find module DaVinciResolveScript - please ensure that the module DaVinciResolveScript is discoverable by python")
+			print("For a default DaVinci Resolve installation, the module is expected to be located in: "+expectedPath)
+			sys.exit()
+	print("DaVinci Resolve module found")
+	return bmd.scriptapp("Resolve")
 
-os.system('cls')
-time.sleep(5)
+########################################################################################################################
 
-# Split video source file path
-dp_1 = ''
-dp_2 = ''
-buf = False
-vdp_split = vdp.split('/')
-vdplen = len(vdp_split)
-for i in range(0, vdplen-1):
-    dp_1 = dp_1 + vdp_split[i] + '/'
-dp_2 = vdp_split[-1]
-# Import Video
-kb.send('ctrl+i')
-time.sleep(lsp)
-kb.write(dp_2)
-time.sleep(lsp)
-while True:
-    if ag.locateOnScreen(p4p, grayscale=True) != None:
-        kb.send('f4')
-        kb.send('ctrl+a')
-        kb.send('delete')
-        kb.write(dp_1)
-        kb.send('enter')
-        break
-while buf == False:
-    print("[LOG] finding...")
-    buf = ag.locateOnScreen(p5p, grayscale=True)
-time.sleep(lsp)
-ag.click(ag.center(buf))
+lfdp = 'D:/Note_Database/Subject/CPDWG Custom Program Developed With Gidhub/Davinci Resolve Clip Loader/log/Project_Number.txt' # Log File Directory Path
+drpmp = 'C:/Users/dachu/AppData/Roaming/Blackmagic Design/DaVinci Resolve/Support/Resolve Disk Database/Resolve Projects/Users/guest/Projects' # DaVinci Resolve Project Media Path
 
-# Buffer
-time.sleep(lsp * 3)
-ag.moveTo(960, 540)
+# Load default project requirement
+#os.system('cls')
+print("[LOG] Start executing script_2.py")
+f = open(lfdp, 'r', encoding='utf-8')
+pn = f.read()
+f.close()
+print("[LOG] " + pn)
+projectName = "DDMS" + pn
+resolve = GetResolve()
+projectManager = resolve.GetProjectManager()
+mediastorage = resolve.GetMediaStorage()
+project = projectManager.LoadProject(projectName)
+if not project:
+    print("[LOG] Unable to load a project '" + projectName + "'")
+    sys.exit()
+mediapool = project.GetMediaPool()
+rootFolder = mediapool.GetRootFolder()
 
-# Split audio source file path
-dp_1 = ''
-dp_2 = ''
-buf = None
-adp_split = adp.split('/')
-adplen = len(adp_split)
-for i in range(0, adplen-1):
-    dp_1 = dp_1 + adp_split[i] + '/'
-dp_2 = adp_split[-1]
-print(dp_1)
-print(dp_2)
-# Import Audio
-kb.send('ctrl+i')
-time.sleep(lsp)
-kb.write(dp_2)
-time.sleep(lsp)
-while True:
-    if ag.locateOnScreen(p4p, grayscale=True) != None:
-        kb.send('f4')
-        kb.send('ctrl+a')
-        kb.send('delete')
-        kb.write(dp_1)
-        kb.send('enter')
-        break
-while buf == None:
-    print("[LOG] finding...")
-    buf = ag.locateOnScreen(p5p, grayscale=True)
-print(type(buf))
-print(buf)
-time.sleep(lsp)
-ag.click(ag.center(buf))
+# 4.1 Create first timeline for YT (finished)
+# timelineName = "Timeline 1"
+# timeline = mediapool.CreateEmptyTimeline(timelineName)
+# if not timeline:
+    # print("Unable to create timeline '" + timelineName + "'")
+
+# 4.2 Move video in timeline
+
+
+# 4.3 Move audio in timeline
+
+print("End executing script_2.py")
+
+'''DaVinci Resolve Scripting Command
+exec(open("D:\\Note_Database\\Subject\\CPDWG Custom Program Developed With Gidhub\\Davinci Resolve Clip Loader\\script_2.py", encoding='utf-8').read())
+'''
+
+'''Links
+https://www.youtube.com/watch?v=4gtz4J9cxbE
+https://note.com/hitsugi_yukana/n/n1601e81df8d7
+https://github.com/search?l=Python&q=davinci+resolve&type=Repositories
+https://github.com/pressreset/resutil/blob/master/resutil.py
+https://github.com/deric/DaVinciResolve-API-Docs/tree/main/examples/python
+https://diop.github.io/davinci-resolve-api/#/
+https://www.youtube.com/results?search_query=davinci+resolve+api+add+media+to+media+pool
+'''

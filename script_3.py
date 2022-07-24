@@ -65,7 +65,7 @@ def ResolveProjectInitialize():
     project.SetSetting("timelineResolutionWidth", str(width))
     project.SetSetting("timelineResolutionHeight", str(height))
 
-    # # Add folder contents to Media Pool:
+    # Add folder contents to Media Pool:
     mediapool = project.GetMediaPool()
     rootFolder = mediapool.GetRootFolder()
 
