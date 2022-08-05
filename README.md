@@ -1,4 +1,5 @@
 # DaVinci Resolve 17 Clip Loader
+## !!ATTENTION!! This repo is archived, and will no longer be updated.
 ## ATTENTION: This project is not finished, not under developing.
 The original way to automate this project is by using its API, but it can only be triggered with the internal console, which is no way reachable using script without directly interact with GUI. Also, despite the detailed description on API, the available functions are not really helpful in automation workflow and quite time consuminig to try out their full functionalities. With these two reasons, making it inevidable to automate this process using 'pyautogui' or 'keyboard' + 'mouse' library. This approach is way too unreliable, it can work on partial tesing, but fail when conbined together.</br>
 Overall, currently availble method to fully automate my daily video editing workflow is not yet achievable.
